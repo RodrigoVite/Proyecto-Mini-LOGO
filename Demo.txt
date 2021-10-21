@@ -1,0 +1,202 @@
+/** Proyecto: Mini-LOGO
+**  Integrantes:
+	-Estrada Gonzalez David
+	-Molina Santiago Isaac
+	-Solís Ávila Angélica
+	-Vite Cruz Rodrigo
+**  Grupo: 3CM5
+**  Materia: Compiladores
+**  Fecha: Enero de 2021
+**/
+/** POLIGONOS **/
+proc poligono ( ) {
+a = $1 ;
+for ( i = 0 ; i < a ; i = i + 1 ) {
+avanzar 100 ;
+girarIzquierda 360 / a ;
+}
+} ;
+
+for ( j = 3 ; j <= 11 ; j = j + 1 ) {
+poligono ( j ) ;
+}
+
+
+/** ESTRELLA DE DAVID **/
+proc estrella ( ) {
+i = 0 ;
+while ( i < 6 ) {
+avanzar 100 ;
+girarDerecha 60 ;
+i = i + 1 ;
+}
+i = 0 ;
+while ( i < 6 ) {
+girarIzquierda 60 ;
+avanzar 100 ;
+girarDerecha 120 ;
+avanzar 100 ;
+i = i + 1 ;
+}
+} ;
+color [ 255 , 0 , 0 ] ;
+estrella ( ) ;
+color [ 0 , 0 , 0 ] ;
+
+
+/** PENTAGRAMA **/
+proc pentagrama ( ) {
+i = 0 ;
+girarIzquierda 108 ;
+while ( i < 5 ) {
+avanzar 100 ;
+girarIzquierda 360 / 5 ;
+i = i + 1 ;
+}
+i = 0 ;
+while ( i < 5 ) {
+girarDerecha 72 ;
+avanzar 160 ;
+girarIzquierda 144 ;
+avanzar 160 ;
+i = i + 1 ;
+}
+} ;
+color [ 0 , 0 , 255 ] ;
+pentagrama ( ) ;
+
+
+/** ESPIROGRAFO 1 (Cuadrado) **/
+proc espirografo1 ( ) {
+i = 0 ;
+while ( i < 24 ) {
+color [ i , i * 20 , i * 30 ] ;
+j = 0 ;
+while ( j < 4 ) {
+avanzar 100 ;
+girarDerecha 90 ;
+j = j + 1 ;
+}
+girarDerecha 15 ;
+i = i + 1 ;
+}
+} ;
+espirografo1 ( ) ;
+
+
+/** ESPIROGRAFO 2 **/
+proc espirografo2 ( ) {
+i = 0 ;
+while ( i < 200 ) {
+color [ 50 , i , 190 ] ;
+avanzar  i * 4  ;
+girarDerecha 145 ;
+i = i + 1 ;
+}
+} ;
+espirografo2 ( ) ;
+
+
+/** ESPIRAL CUADRADA DE NIVEL N **/
+proc espiral ( ) {
+i = 0 ;
+while ( i < $1 ) {
+color [ i * 13 , i * 26 , i * 51 ] ;
+avanzar i * 5 ;
+girarDerecha 90 ;
+i = i + 1 ;
+}
+return ;
+} ;
+espiral ( 80 ) ;
+
+
+/** CURVA DE HILBERT **/
+proc hilbert ( ) {
+if ( $1 == 0 ) {
+return ;
+}
+girarDerecha $2 ;
+hilbert ( $1 - 1 , - $2 ) ;
+avanzar 10 ;
+girarIzquierda $2 ;
+hilbert ( $1 - 1 ,  $2 ) ;
+avanzar 10 ;
+hilbert ( $1 - 1 , $2 ) ;
+girarIzquierda $2 ;
+avanzar 10 ;
+hilbert ( $1 - 1 , - $2 ) ;
+girarDerecha $2 ;
+} ;
+girarIzquierda 135 ;
+subir 500 ;
+girarDerecha 135 ;
+hilbert ( 6 , 90 ) ;
+
+
+/** COPO DE NIEVE DE KOCH **/
+proc trazar ( ) {
+if ( $1 == 0 ) {
+color [ 10 , 10 , 10 ] ;
+avanzar $2 ;	
+}
+if ( $1 >= 1 ) {
+trazar ( $1 - 1 , $2 * 0.3333 ) ;
+girarDerecha 60 ;
+trazar ( $1 - 1 , $2 * 0.3333 ) ;
+girarIzquierda 120 ;
+trazar ( $1 - 1 , $2 * 0.3333 ) ;
+girarDerecha 60 ;
+trazar ( $1 - 1 , $2 * 0.3333 ) ;
+}
+} ;
+proc copoNieve ( ) {
+girarIzquierda 135 ;
+subir 250 ;
+girarDerecha 135 ;
+bajar 80 ;
+girarDerecha 60 ;
+trazar ( $1 , 500 ) ;
+girarIzquierda 120 ;
+trazar ( $1 , 500 ) ;
+girarIzquierda 120 ;
+trazar ( $1 , 500 ) ;
+} ;
+copoNieve ( 5 ) ;
+
+
+/** ÁRBOL **/
+proc arbol ( ) {
+if ( $1 > 4 ) {
+avanzar $1 ;
+girarDerecha 20 ;
+color [ 67 , 101 , 4 ] ;
+arbol ( $1 - 4 ) ;
+girarDerecha 320 ;
+color [ 67 , 101 , 4 ] ;
+arbol ( $1 - 4 ) ;
+girarDerecha 20 ;
+color [ 67 , 101 , 4 ] ;
+avanzar ( -1 * $1 ) ;
+}
+} ;
+girarIzquierda 90 ;
+arbol ( 50 ) ;
+
+
+/** REGLA DE NIVEL N **/
+proc regla ( ) {
+if ( $2 > 0 ) {
+regla ( $1 * 0.5 , $2 - 1 ) ;
+avanzar $1 * 0.5 ;
+girarDerecha 90 ;
+avanzar $2 * 40 ;
+avanzar ( -40 * $2 ) ;
+girarIzquierda 90 ;
+regla ( $1 * 0.5 , $2 - 1 ) ;
+avanzar ( -0.5 * $1 ) ;
+}
+} ; 
+subir 250 ;
+girarIzquierda 180 ;
+regla ( 600 , 6 ) ;
